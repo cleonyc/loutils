@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "loutils",
+  "version": "${version}",
+  "name": "Loutils",
+  "description": "does thing",
+  "authors": [
+    "cleonyc"
+  ],
+  "contact": {},
+  "license": "GPL-3.0",
+  "icon": "assets/loutils/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "nyc.cleo.loutils.client.LoutilsClient"
+    ],
+    "main": [
+      "nyc.cleo.loutils.Loutils"
+    ]
+  },
+  "mixins": [
+    "loutils.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
