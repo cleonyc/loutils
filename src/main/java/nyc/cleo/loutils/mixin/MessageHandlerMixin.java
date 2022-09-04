@@ -14,18 +14,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MessageHandler.class)
 public class MessageHandlerMixin {
+    private long lastMessage = 0L;
     @Inject(method = "onChatMessage", at = @At("RETURN"))
     public void onChatMessage(SignedMessage message, MessageType.Parameters params, CallbackInfo ci) {
         if (message.getContent().contains(Text.of("chat test"))) {
-            assert MinecraftClient.getInstance().player != null;
-            MinecraftClient.getInstance().player.sendChatMessage("cat test <3", null);
+            send();
         }
     }
     @Inject(method = "onGameMessage", at  = @At("RETURN"))
     public void onChatMessage(Text message, boolean overlay, CallbackInfo ci) {
         if (message.contains(Text.of("chat test"))) {
-            assert MinecraftClient.getInstance().player != null;
-            MinecraftClient.getInstance().player.sendChatMessage("cat test <3", null);
+            send();
         }
+    }
+    private void send() {
+        if (lastMessage > System.currentTimeMillis() - 1000) {
+            return;
+        }
+        assert MinecraftClient.getInstance().player != null;
+        MinecraftClient.getInstance().player.sendChatMessage("cat test <3", null);
+        lastMessage = 0L;
     }
 }
